@@ -1,0 +1,30 @@
+﻿@inject BusinesssLayer.Abstrack.IBlogServices BlogService
+
+@{
+    var Model = BlogService.getBlogWithFirst(); // burada model içeriden çekiliyor
+}
+
+@if (Model != null)
+{
+    <div class="rounded-xl overflow-hidden mb-12">
+        <div class="min-h-[480px] flex flex-col items-start justify-end p-8 md:p-12 bg-cover bg-center"
+             style='background-image:url("@Model.BlogImage")'>
+            <div class="flex flex-col gap-4 text-white text-left max-w-2xl">
+                <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight">@Model.BlogTitle</h1>
+
+                @{
+                    var content = Model.BlogDescription ?? "";
+                    var shortened = content.Length > 200 ? content[..200] : content;
+                    var truncated = shortened.Contains(" ")
+                    ? shortened[..shortened.LastIndexOf(" ")] + "..."
+                    : shortened;
+                }
+
+                <p class="text-base md:text-lg font-light">@Html.Raw(truncated)</p>
+            </div>
+
+            <a class="mt-6 bg-primary text-white font-bold py-3 px-6 rounded-lg hover:bg-primary/90 transition-colors"
+               href="/Home/BlogDetails/@Model.Id">Devam et</a>
+        </div>
+    </div>
+}

@@ -1,0 +1,70 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Pekova Blog</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader:wght@400;500;700;800&amp;family=Noto+Sans:wght@400;500;700;900" onload="this.rel='stylesheet'" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#1193d4",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101c22",
+              },
+              fontFamily: {
+                "display": ["Newsreader", "sans-serif"]
+              },
+              borderRadius: {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+            },
+          },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-800 dark:text-slate-200">
+    <div class="relative flex min-h-screen w-full flex-col group/design-root">
+        <div class="layout-container flex h-full grow flex-col">
+            <header class="flex items-center justify-between whitespace-nowrap border-b border-slate-200 dark:border-slate-800 px-10 py-3">
+                <div class="flex items-center gap-4">
+                    <div class="w-8 h-8 text-primary">
+                    
+                    </div>
+                    <h2 class="text-xl font-bold">Blog</h2>
+                </div>
+                <nav class="hidden md:flex flex-1 justify-center items-center gap-8 text-sm font-medium">
+                    <a class="hover:text-primary transition-colors" href="/Home/Index">Ana Sayfa</a>
+                    <a class="hover:text-primary transition-colors" href="/Home/About">Hakkımda</a>
+                </nav>
+            </header>
+            <main class="flex-1 px-4 sm:px-10 md:px-20 lg:px-40 py-10">
+                <div class="max-w-5xl mx-auto">
+                    @await Html.PartialAsync("_BlogTheLastWrite", new EntityLayerr.Concrate.Blogs())
+
+
+              
+
+                    <h2 class="text-3xl font-bold mb-8 px-4 sm:px-0">Son Yazılar</h2>
+
+
+                    @await Html.PartialAsync("_BlogListPartial")
+
+                </div>
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
