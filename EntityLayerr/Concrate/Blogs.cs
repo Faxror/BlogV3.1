@@ -12,6 +12,7 @@ namespace EntityLayerr.Concrate
 
         public string BlogTitle { get; set; }
         public string BlogDescription { get; set; }
+        
         public string BlogImage { get; set; }
 
         public DateTime BlogTime { get; set; }

@@ -1,0 +1,17 @@
+Login ve Register sayfalarý yapýlacak, frontend kýsmý hazýr backend kýsmý yapýlacak.
+ -- Identity kullanýlacak.
+ -- Email confirmation yapýlacak.
+ -- Password reset yapýlacak.
+ -- JWT token üretilecek.
+ -- Refresh token mekanizmasý yapýlacak.
+ -- Kullanýcý rolleri olacak (Admin, User).
+ -- Rol bazlý eriþim kontrolü yapýlacak.
+ -- Kullanýcý profili sayfasý yapýlacak.
+ -- Kullanýcý bilgileri güncellenebilecek.
+
+Yeni Blog ekleme ve bloglarý görüntüleme sayfasý yapýlacak.
+ -- Blog ekleme sayfasý yapýlacak (Admin yetkisi ile).
+ -- Blog silme ve güncelleme iþlemleri yapýlacak (Admin yetkisi ile).
+ -- Bloglara yorum yapma özelliði eklenecek (Kayýtlý kullanýcýlar).
+ -- Yorumlarý onaylama ve silme iþlemleri yapýlacak (Admin yetkisi ile).
+
