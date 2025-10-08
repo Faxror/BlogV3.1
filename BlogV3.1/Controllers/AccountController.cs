@@ -90,9 +90,8 @@ namespace BlogV3._1.Controllers
                     string confirmationLink = $"{Url.Action("EmailConfirme", "Account", new { email = appUser.Email, code = confirimCode }, protocol: HttpContext.Request.Scheme)}";
 
                     string emailBody = $@"<p>Merhaba,</p>
-                          <p>Kayıt İşlemini Bitirmek İçin kodunuz: {confirimCode}.</p>
                           <p>Lütfen onaylamak için aşağıdaki bağlantıya tıklayın:</p>
-                          <p><a href=""{confirmationLink}"">{confirmationLink}</a></p>";
+                          <p><a href=""{confirmationLink}"">E-posta onayla</a></p>";
 
                     MailMessage mail = new MailMessage("information@pekova.com.tr", recipientEmail, emailTitle, emailBody);
 
@@ -170,76 +169,111 @@ namespace BlogV3._1.Controllers
             return View();
         }
 
+        public async Task<IActionResult> ChangePasswordInvalid()
+        {
+            return View();
+        }
+
         [HttpPost]
         public async Task<IActionResult> SendChangePassword(string Email)
         {
-            SmtpClient smtpClient = new SmtpClient("mt-prime-win.guzelhosting.com", 587);
-            smtpClient.Credentials = new NetworkCredential("information@pekova.com.tr", "2e3Gd9j3*");
-            smtpClient.EnableSsl = true;
+            var user = await _userManager.FindByEmailAsync(Email);
+            if (user == null)
+            {
+                TempData["ErrorMessage"] = "Bu e-posta adresine kayıtlı bir kullanıcı bulunamadı.";
+                return RedirectToAction("SendChangePassword");
+            }
 
-            string recipientEmail = $"{Email}";
+            var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+            var confirmationLink = Url.Action("ChangePassword","Account",new { email = Email, token = WebUtility.UrlEncode(token) },protocol: HttpContext.Request.Scheme);
 
+            string emailBody = $@"
+                <p>Merhaba {user},</p>
+                <p>Şifrenizi değiştirmek için aşağıdaki bağlantıya tıklayın:</p>
+                <p><a href=""{confirmationLink}"">Şifreyi sıfırla</a></p>
+                <p>Bu bağlantı yalnızca bir kez kullanılabilir.</p>";
 
-            string emailTitle = "Blog - Şifre değiştirme onay";
+            var mail = new MailMessage("information@pekova.com.tr",Email, "Blog - Şifre Sıfırlama Onayı", emailBody)
+            {
+                IsBodyHtml = true
+            };
 
+            using (var smtpClient = new SmtpClient("mt-prime-win.guzelhosting.com", 587))
+            {
+                smtpClient.Credentials = new NetworkCredential("information@pekova.com.tr", "2e3Gd9j3*");
+                smtpClient.EnableSsl = true;
+                await smtpClient.SendMailAsync(mail);
+            }
 
-            string confirmationLink = $"{Url.Action("ChangePassword", "Account", new { email = Email }, protocol: HttpContext.Request.Scheme)}";
-
-            string emailBody = $@"<p>Merhaba,</p>
-                          <p>Lütfen onaylamak için aşağıdaki bağlantıya tıklayın:</p>
-                          <p><a href=""{confirmationLink}"">{confirmationLink}</a></p>";
-
-            MailMessage mail = new MailMessage("information@pekova.com.tr", recipientEmail, emailTitle, emailBody);
-
-
-           mail.IsBodyHtml = true;
-
-            await smtpClient.SendMailAsync(mail);
-
-
-            TempData["Mail"] = Email;
-            ViewBag.email = Email;
-            return RedirectToAction("SendChangePassword", "Account");
-               
+            TempData["SuccessMessage"] = "E-posta adresinize bir sıfırlama bağlantısı gönderildi.";
+            return RedirectToAction("SendChangePassword");
         }
 
 
         [HttpGet]
-        public IActionResult ChangePassword(string email)
+        public async Task<IActionResult> ChangePassword(string email, string token)
         {
-            ViewBag.Email = email;
+            if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(token))
+                return BadRequest("Geçersiz bağlantı.");
 
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+            {
+                ViewBag.ErrorMessage = "Kullanıcı bulunamadı.";
+
+                return RedirectToAction("ChangePasswordInvalid", "Account");
+            }
+
+            var decodedToken = WebUtility.UrlDecode(token);
+
+            var isValid = await _userManager.VerifyUserTokenAsync(
+                user,
+                _userManager.Options.Tokens.PasswordResetTokenProvider,
+                "ResetPassword",
+                decodedToken
+            );
+
+            if (!isValid){
+                ViewBag.ErrorMessage = "Bu link geçerliliğini yitirmiştir.";
+                return View("ChangePasswordInvalid", "Account");
+
+
+            }
+
+            ViewBag.Email = email;
+            ViewBag.Token = token;
             return View();
         }
+
 
         [HttpPost]
-        public async Task<IActionResult> ChangePassword(string Email, string newPassword)
+        public async Task<IActionResult> ChangePassword(string Email, string Token, string newPassword)
         {
             var user = await _userManager.FindByEmailAsync(Email);
-            if (user != null)
-            {
-
-                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-                var result = await _userManager.ResetPasswordAsync(user, token, newPassword);
-                if (result.Succeeded)
-                {
-                    TempData["NewPassword"] = newPassword;
-                    ViewBag.NewPassword = newPassword;
-                    return RedirectToAction("Login", "Account");
-                }
-                else
-                {
-                    foreach (var item in result.Errors)
-                    {
-                        ModelState.AddModelError("", item.Description);
-                    }
-                }
-            }
-            else
+            if (user == null)
             {
                 ModelState.AddModelError("", "Kullanıcı bulunamadı.");
+                return View();
             }
+            var decodedToken = WebUtility.UrlDecode(Token);
+
+            var result = await _userManager.ResetPasswordAsync(user, decodedToken, newPassword);
+
+            if (result.Succeeded)
+            {
+                TempData["SuccessMessage"] = "Şifreniz başarıyla değiştirildi. Giriş yapabilirsiniz.";
+                return RedirectToAction("Login", "Account");
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            ViewBag.Email = Email;
+            ViewBag.Token = Token;
             return View();
         }
+
     }
 }
