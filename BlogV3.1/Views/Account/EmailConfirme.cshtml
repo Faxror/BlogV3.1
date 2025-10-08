@@ -1,0 +1,76 @@
+﻿@{
+    ViewData["Title"] = "E-posta Onayı";
+    var email = ViewBag.email as string;
+    var code = ViewBag.Code;
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Blog - E-posta Doğrulama</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1193d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: { "display": ["Newsreader"] },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+    <div class="flex flex-col min-h-screen">
+        <header class="w-full">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
+                    <h2 class="text-xl font-bold text-gray-900 dark:text-white">Blog</h2>
+                </div>
+            </div>
+        </header>
+
+        <main class="flex-grow flex items-center justify-center py-12 sm:px-6 lg:px-8">
+            <div class="w-full max-w-md space-y-8 p-8 bg-white dark:bg-gray-800/20 shadow-lg rounded-xl text-center">
+                <div>
+                    <div class="mx-auto flex items-center justify-center h-12 w-12 rounded-full bg-blue-100 dark:bg-blue-900/50">
+                        <span class="material-symbols-outlined text-3xl text-blue-600 dark:text-blue-400">
+                            mail
+                        </span>
+                    </div>
+                    <h2 class="mt-6 text-2xl font-extrabold text-gray-900 dark:text-white">
+                        E-posta adresinizi onaylayın
+                    </h2>
+                    <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+                        Aşağıdaki butona tıklayarak <strong>@email</strong> adresinizi doğrulayabilirsiniz.
+                    </p>
+                </div>
+
+                <div class="mt-8">
+                    <form asp-action="EmailConfirme" asp-controller="Account" method="post">
+                        <input type="hidden" name="email" value="@email" />
+                        <input type="hidden" name="code" value="@code" />
+                        <button type="submit"
+                                class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary">
+                            Onayla
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,6 +1,4 @@
-Login ve Register sayfalarý yapýlacak, frontend kýsmý hazýr backend kýsmý yapýlacak.
- -- Identity kullanýlacak.
- -- Email confirmation yapýlacak.
+Login ve Register sayfalarý yapýldý, diðer maddelere bakýlacak.
  -- Password reset yapýlacak.
  -- JWT token üretilecek.
  -- Refresh token mekanizmasý yapýlacak.

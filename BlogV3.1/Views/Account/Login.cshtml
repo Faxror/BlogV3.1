@@ -1,0 +1,86 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using BlogV3._1.Models
+@model RegisterViewModel
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Blog</title>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#1193d4",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101c22",
+              },
+              fontFamily: {
+                "display": ["Newsreader"]
+              },
+              borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+            },
+          },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="relative flex h-auto min-h-screen w-full flex-col overflow-x-hidden text-neutral-800 dark:text-neutral-200">
+        <header class="flex items-center justify-between whitespace-nowrap border-b border-neutral-200/80 dark:border-neutral-700/80 px-10 py-4">
+            <div class="flex items-center gap-3">   
+                <h2 class="text-2xl font-bold">Blog</h2>
+            </div>
+            <nav class="flex items-center gap-8">
+                <a class="text-base font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-primary transition-colors" href="/Home/Index">Ana Sayfa</a>
+                <a class="text-base font-medium text-neutral-600 dark:text-neutral-300 hover:text-primary dark:hover:text-primary transition-colors" href="/Home/About">Hakkımda</a>
+                <button class="flex min-w-[96px] cursor-pointer items-center justify-center rounded-lg h-10 px-5 bg-neutral-200/80 dark:bg-neutral-800/80 text-base font-bold hover:bg-primary/20 dark:hover:bg-primary/20 transition-colors">
+                    <span>Giriş yap</span>
+                </button>
+            </nav>
+        </header>
+        <main class="flex flex-1 items-center justify-center py-12">
+            <div class="w-full max-w-md px-4">
+                <div class="text-center mb-8">
+                    <h1 class="text-4xl font-bold tracking-tight text-neutral-900 dark:text-white">Hoşgeldiniz.</h1>
+                    <p class="mt-2 text-base text-neutral-500 dark:text-neutral-400">Giriş yaparak blog yazabilirsiniz..</p>
+                </div>
+                <form asp-action="Login" asp-controller="Account" class="space-y-6">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300" asp-for="Username" for="UserName">Kullanıcı Adı</label>
+                        <div class="mt-1">
+                            <input class="form-input block w-full rounded-lg border-neutral-300 dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:border-primary focus:ring-primary" id="UserName" name="UserName" placeholder="kullanıcı adı" type="text" />
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 dark:text-neutral-300" asp-for="Password" for="Password">Şifre</label>
+                        <div class="mt-1">
+                            <input autocomplete="current-password" class="form-input block w-full rounded-lg border-neutral-300 dark:border-neutral-700 bg-background-light dark:bg-background-dark h-12 px-4 placeholder:text-neutral-400 dark:placeholder:text-neutral-500 focus:border-primary focus:ring-primary" id="Password" name="Password" placeholder="••••••••" type="password" />
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-end">
+                        <div class="text-sm">
+                            <a class="font-medium text-primary hover:text-primary/80" href="/Account/SendChangePassword">Şifrenimi unuttun?</a>
+                        </div>
+                    </div>
+                    <div>
+                        <button class="flex w-full justify-center rounded-lg bg-primary px-4 py-3 text-base font-bold text-white shadow-sm hover:bg-primary/90 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary" type="submit">
+                            Giriş yap
+                        </button>
+                    </div>
+                </form>
+                <p class="mt-8 text-center text-sm text-neutral-500 dark:text-neutral-400">
+                    Bir hesabın yok mu?
+                    <a class="font-medium text-primary hover:text-primary/80" href="#">Kayıt ol</a>
+                </p>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

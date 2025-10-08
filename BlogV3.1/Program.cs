@@ -1,21 +1,27 @@
+using BlogV3._1.Models;
 using BusinesssLayer.Abstrack;
 using BusinesssLayer.Concrete;
 using DataAccessLayer.Concrete;
 using DataAccessLayerr.Abstrack;
 using DataAccessLayerr.Concrete;
 using EntityLayerr.Concrate;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+builder.Services.AddIdentity<AppUser, AppRole>()
+    .AddEntityFrameworkStores<DBContext>()
+    .AddDefaultTokenProviders().AddErrorDescriber<AuthorIdentityValidator>();
 builder.Services.AddDbContext<DBContext>();
 builder.Services.AddScoped<IBlogServices, BlogManager>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();  
 
 var app = builder.Build();
-
+    
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

@@ -1,0 +1,91 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using BlogV3._1.Models
+@model RegisterViewModel
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Blog - Kayıt Ol</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms"></script>
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1193d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader"]
+                    },
+                    borderRadius: { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" },
+                },
+            },
+        }
+    </script>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;700;800&amp;display=swap" rel="stylesheet" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-gray-800 dark:text-gray-200">
+    <div class="flex flex-col min-h-screen">
+        <header class="w-full">
+            <div class="container mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between py-4 border-b border-gray-200 dark:border-gray-700">
+                    <a class="flex items-center gap-2" href="#">
+                        <h2 class="text-xl font-bold text-gray-900 dark:text-white">Blog</h2>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <main class="flex-grow flex items-center justify-center py-12 sm:px-6 lg:px-8">
+            <div class="w-full max-w-md space-y-8 p-8 bg-white dark:bg-gray-800/20 shadow-lg rounded-xl">
+                <div>
+                    <h2 class="text-center text-3xl font-extrabold text-gray-900 dark:text-white">
+                        Blog'a kaydol
+                    </h2>
+                </div>
+                <form asp-action="Register" asp-controller="Account" class="mt-8 space-y-6" method="POST">
+                    <div class="space-y-4">
+                        <div>
+                            <label class="sr-only" for="first-name" asp-for="Username">Kullanıcı Adınız</label>
+                            <input class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="Username" name="Username" placeholder="Kullanıcı Adınız" required="" type="text" />
+                        </div>
+                        <div>
+                            <label class="sr-only" for="first-name" asp-for="Name">Adınız</label>
+                            <input class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="Name" name="Name" placeholder="Adınız" required="" type="text" />
+                        </div>
+                        <div>
+                            <label class="sr-only" for="last-name" asp-for="Surname">Soyadınız</label>
+                            <input class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="Surname" name="Surname" placeholder="Soyadınız" required="" type="text" />
+                        </div>
+                        <div>
+                            <label class="sr-only" for="email-address" asp-for="Email">E-posta adresiniz</label>
+                            <input autocomplete="email" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="Email" name="Email" placeholder="E-posta adresiniz" required="" type="email" />
+                        </div>
+                        <div>
+                            <label class="sr-only" for="email-address" asp-for="Phone">Telefon Numarası</label>
+                            <input class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="Phone" name="Phone" placeholder="Telefon Numaranız" required="" type="text" />
+                        </div>
+                        <div>
+                            <label class="sr-only" for="password" asp-for="Password">Parolanız</label>
+                            <input autocomplete="current-password" class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="password" name="password" placeholder="Parolanız" required="" type="password" />
+                        </div>
+                    </div>
+                    <div>
+                        <button class="group relative w-full flex justify-center py-3 px-4 border border-transparent text-sm font-medium rounded-lg text-white bg-primary hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary" type="submit">
+                            Kaydol
+                        </button>
+                    </div>
+                    <p class="text-center text-sm text-gray-600 dark:text-gray-400">
+                        Kaydolarak, <a class="font-medium text-primary hover:text-primary/90" href="#">hizmet şartlarımızı</a> ve <a class="font-medium text-primary hover:text-primary/90" href="#">gizlilik politikamızı</a> kabul etmiş olursunuz.
+                    </p>
+                </form>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>
