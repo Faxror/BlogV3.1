@@ -25,6 +25,11 @@ namespace DataAccessLayerr.Concrete
             return blog;
         }
 
+        public List<Author> GetAllAuthor()
+        {
+            return dBContext.Authors.ToList();
+        }
+
         public Author GetAuthor()
         {
            return dBContext.Authors.FirstOrDefault();

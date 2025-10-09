@@ -23,6 +23,11 @@ namespace BusinesssLayer.Concrete
             return _blogRepository.addBlog(blogs);
         }
 
+        public List<Author> GetAllAuthor()
+        {
+             return _blogRepository.GetAllAuthor();
+        }
+
         public Author GetAuthor()
         {
             return _blogRepository.GetAuthor();

@@ -17,6 +17,10 @@ namespace EntityLayerr.Concrate
 
         public DateTime BlogTime { get; set; }
 
+        public int BlogRating { get; set; }
+
+        public bool status { get; set; }
+
         public int AuthorID { get; set; }
 
         public Author Author { get; set; }
