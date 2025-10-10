@@ -1,0 +1,196 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800" onload="this.rel='stylesheet'" rel="stylesheet" />
+    <title>Blog Kontrol Paneli</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script>
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              colors: {
+                "primary": "#1193d4",
+                "background-light": "#f6f7f8",
+                "background-dark": "#101c22",
+              },
+              fontFamily: {
+                "display": ["Newsreader"]
+              },
+              borderRadius: {
+                "DEFAULT": "0.25rem",
+                "lg": "0.5rem",
+                "xl": "0.75rem",
+                "full": "9999px"
+              },
+            },
+          },
+        }
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display">
+    <div class="flex h-screen">
+        <aside class="flex flex-col w-64 bg-background-light dark:bg-background-dark border-r border-primary/20 dark:border-primary/30">
+            <div class="flex items-center justify-center h-16 border-b border-primary/20 dark:border-primary/30">
+                <h1 class="text-xl font-bold text-background-dark dark:text-background-light">Yönetim Paneli</h1>
+            </div>
+            <nav class="flex-1 px-2 py-4 space-y-2">
+                <a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-background-dark dark:text-background-light hover:bg-primary/10 dark:hover:bg-primary/20" href="#">
+                    <span class="material-symbols-outlined mr-3">dashboard</span>
+                    Genel Bakış
+                </a>
+                <a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg bg-primary/20 dark:bg-primary/30 text-primary" href="#">
+                    <span class="material-symbols-outlined mr-3">article</span>
+                    Yazıları Yönet
+                </a>
+                <a class="flex items-center px-4 py-2 text-sm font-medium rounded-lg text-background-dark dark:text-background-light hover:bg-primary/10 dark:hover:bg-primary/20" href="#">
+                    <span class="material-symbols-outlined mr-3">settings</span>
+                    Site Ayarları
+                </a>
+            </nav>
+            <div class="px-2 py-4">
+                <button class="w-full flex items-center justify-center px-4 py-2 text-sm font-medium rounded-lg bg-primary text-white hover:bg-opacity-90">
+                    <span class="material-symbols-outlined mr-2">add</span>
+                    Yeni Yazı
+                </button>
+            </div>
+        </aside>
+        <main class="flex-1 p-8 overflow-y-auto">
+            <div class="flex items-center justify-between mb-8">
+                <h1 class="text-3xl font-bold text-background-dark dark:text-background-light">Yazıları Yönet</h1>
+                <div class="flex items-center space-x-4">
+                    <div class="relative">
+                        <input class="w-64 pl-10 pr-4 py-2 text-sm border border-primary/20 dark:border-primary/30 rounded-lg bg-background-light dark:bg-background-dark text-background-dark dark:text-background-light focus:ring-primary focus:border-primary" placeholder="Yazılarda ara..." type="text" />
+                        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-background-dark/50 dark:text-background-light/50">search</span>
+                    </div>
+                    <button class="flex items-center px-4 py-2 text-sm font-medium rounded-lg border border-primary/20 dark:border-primary/30 hover:bg-primary/10 dark:hover:bg-primary/20 text-background-dark dark:text-background-light">
+                        <span class="material-symbols-outlined mr-2">filter_list</span>
+                        Filtrele
+                    </button>
+                </div>
+            </div>
+            <div class="overflow-x-auto bg-background-light dark:bg-background-dark border border-primary/20 dark:border-primary/30 rounded-lg shadow-sm">
+                <table class="w-full text-sm text-left text-background-dark dark:text-background-light">
+                    <thead class="text-xs uppercase bg-primary/10 dark:bg-primary/20 text-background-dark dark:text-background-light">
+                        <tr>
+                            <th class="px-6 py-3" scope="col">
+                                <input class="w-4 h-4 text-primary bg-background-light border-primary/30 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-background-dark focus:ring-2 dark:bg-background-dark dark:border-primary/50" type="checkbox" />
+                            </th>
+                            <th class="px-6 py-3" scope="col">Başlık</th>
+                            <th class="px-6 py-3" scope="col">Yazar</th>
+                            <th class="px-6 py-3" scope="col">Kategori</th>
+                            <th class="px-6 py-3" scope="col">Yayın Tarihi</th>
+                            <th class="px-6 py-3" scope="col">Durum</th>
+                            <th class="px-6 py-3" scope="col">Eylemler</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="border-b border-primary/10 dark:border-primary/20">
+                            <td class="px-6 py-4">
+                                <input class="w-4 h-4 text-primary bg-background-light border-primary/30 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-background-dark focus:ring-2 dark:bg-background-dark dark:border-primary/50" type="checkbox" />
+                            </td>
+                            <th class="px-6 py-4 font-medium whitespace-nowrap text-background-dark dark:text-background-light" scope="row">Yeni Başlayanlar İçin Python</th>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Admin</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Programlama</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">2023-08-15</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 dark:bg-primary/30 text-primary">Yayınlandı</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-primary/10 dark:border-primary/20">
+                            <td class="px-6 py-4">
+                                <input class="w-4 h-4 text-primary bg-background-light border-primary/30 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-background-dark focus:ring-2 dark:bg-background-dark dark:border-primary/50" type="checkbox" />
+                            </td>
+                            <th class="px-6 py-4 font-medium whitespace-nowrap text-background-dark dark:text-background-light" scope="row">Veri Bilimi Temelleri</th>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Admin</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Veri Bilimi</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">2023-07-20</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-primary/20 dark:bg-primary/30 text-primary">Yayınlandı</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-primary/10 dark:border-primary/20">
+                            <td class="px-6 py-4">
+                                <input class="w-4 h-4 text-primary bg-background-light border-primary/30 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-background-dark focus:ring-2 dark:bg-background-dark dark:border-primary/50" type="checkbox" />
+                            </td>
+                            <th class="px-6 py-4 font-medium whitespace-nowrap text-background-dark dark:text-background-light" scope="row">Makine Öğrenimi Algoritmaları</th>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Admin</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Makine Öğrenimi</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">2023-06-10</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-background-dark/10 dark:bg-background-light/10 text-background-dark dark:text-background-light">Taslak</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr class="border-b border-primary/10 dark:border-primary/20">
+                            <td class="px-6 py-4">
+                                <input class="w-4 h-4 text-primary bg-background-light border-primary/30 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-background-dark focus:ring-2 dark:bg-background-dark dark:border-primary/50" type="checkbox" />
+                            </td>
+                            <th class="px-6 py-4 font-medium whitespace-nowrap text-background-dark dark:text-background-light" scope="row">Derin Öğrenme Giriş</th>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Admin</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Makine Öğrenimi</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">2023-05-05</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-background-dark/10 dark:bg-background-light/10 text-background-dark dark:text-background-light">Taslak</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="px-6 py-4">
+                                <input class="w-4 h-4 text-primary bg-background-light border-primary/30 rounded focus:ring-primary dark:focus:ring-primary dark:ring-offset-background-dark focus:ring-2 dark:bg-background-dark dark:border-primary/50" type="checkbox" />
+                            </td>
+                            <th class="px-6 py-4 font-medium whitespace-nowrap text-background-dark dark:text-background-light" scope="row">Doğal Dil İşleme</th>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Admin</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">Veri Bilimi</td>
+                            <td class="px-6 py-4 text-background-dark/80 dark:text-background-light/80">2023-04-01</td>
+                            <td class="px-6 py-4">
+                                <span class="px-2 py-1 text-xs font-medium rounded-full bg-background-dark/10 dark:bg-background-light/10 text-background-dark dark:text-background-light">Taslak</span>
+                            </td>
+                            <td class="px-6 py-4">
+                                <div class="flex items-center space-x-2">
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">edit</span></button>
+                                    <button class="p-1 text-background-dark/60 dark:text-background-light/60 hover:text-primary"><span class="material-symbols-outlined">delete</span></button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="flex justify-between items-center mt-4">
+                <p class="text-sm text-background-dark/60 dark:text-background-light/60">5 sonuçtan 1-5 arası gösteriliyor</p>
+                <div class="flex items-center space-x-1">
+                    <button class="p-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20 disabled:opacity-50" disabled=""><span class="material-symbols-outlined">chevron_left</span></button>
+                    <button class="p-2 rounded-lg hover:bg-primary/10 dark:hover:bg-primary/20"><span class="material-symbols-outlined">chevron_right</span></button>
+                </div>
+            </div>
+        </main>
+    </div>
+
+</body>
+</html>

@@ -18,20 +18,31 @@ namespace BlogV3._1.Controllers
 
         public IActionResult Index()
         {
-            return View();
+            var blogs = blogServices.getBlogAll();
+            
+            ViewBag.TotalBlogs = blogs.Count();
+            ViewBag.PublishedBlogs = blogs.Count(x => x.status == true);
+            ViewBag.DraftBlogs = blogs.Count(x => x.status == false);
+            return View(blogs);
         }
 
+        public async Task<IActionResult> Write()
+        {
+            var blog = blogServices.getBlogAll();
+            return View(blog);
+
+        }
 
         [HttpGet]
         public IActionResult AddWrite()
         {
-          
+
             List<SelectListItem> valuess = (from x in blogServices.GetAllAuthor()
                                             select new SelectListItem
                                             {
                                                 Text = x.AuthorName,
                                                 Value = x.AuthorID.ToString()
-                                           }).ToList();
+                                            }).ToList();
             ViewBag.v = valuess;
             return View();
         }
@@ -39,7 +50,7 @@ namespace BlogV3._1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddWrite(Blogs blogs)
         {
-           
+
 
             blogs.BlogTime = DateTime.Now;
             blogs.BlogImage = "https://ornek.com/gorsel.jpg";
@@ -53,11 +64,31 @@ namespace BlogV3._1.Controllers
         }
 
 
-        [HttpDelete]
+        [HttpGet]
+        public IActionResult EditBlog(int id)
+        {
+            List<SelectListItem> valuess = (from x in blogServices.GetAllAuthor()
+                                            select new SelectListItem
+                                            {
+                                                Text = x.AuthorName,
+                                                Value = x.AuthorID.ToString()
+                                            }).ToList();
+            ViewBag.v = valuess;
+            var blog = blogServices.GetBlogs(id);
+            return View(blog);
+        }
+        [HttpPost]
+        public async Task<IActionResult> EditBlog(Blogs blogs)
+        {
+            blogs.BlogTime = DateTime.Now;
+            await Task.Run(() => blogServices.UpdateBlog(blogs));
+            return RedirectToAction("Index", "Admin");
+        }
+
         public IActionResult DeleteBlog(int id)
         {
             blogServices.removeBlog(id);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "Admin");
         }
 
 
@@ -71,4 +102,5 @@ namespace BlogV3._1.Controllers
             TempData["SuccessMessage"] = "Yazı başarıyla eklendi!";
             return RedirectToAction("AddWrite");
         }
+    }
 }
