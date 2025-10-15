@@ -1,0 +1,65 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Blog Site</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1193d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "foreground-light": "#111618",
+                        "foreground-dark": "#f6f7f8",
+                        "card-light": "#ffffff",
+                        "card-dark": "#182832",
+                        "border-light": "#e3e8eb",
+                        "border-dark": "#2d3f4d",
+                        "muted-foreground-light": "#617c89",
+                        "muted-foreground-dark": "#94a3b8"
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-foreground-light dark:text-foreground-dark">
+    <div class="flex min-h-screen w-full flex-col items-center justify-center bg-background-light dark:bg-background-dark px-4">
+        <div class="max-w-md text-center">
+            <div class="flex justify-center mb-6">
+                <svg class="h-24 w-24 text-red-500" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <line x1="12" x2="12" y1="8" y2="12"></line>
+                    <line x1="12" x2="12.01" y1="16" y2="16"></line>
+                </svg>
+            </div>
+            <h1 class="text-4xl font-bold font-display text-foreground-light dark:text-foreground-dark">Yetkisiz Erişim</h1>
+            <p class="mt-4 text-lg text-muted-foreground-light dark:text-muted-foreground-dark">Bu sayfaya erişim izniniz bulunmamaktadır.</p>
+            <p class="mt-2 text-muted-foreground-light dark:text-muted-foreground-dark">Lütfen bir yöneticiyle iletişime geçin veya ana sayfaya geri dönün.</p>
+            <a class="mt-8 inline-block rounded-lg bg-primary px-6 py-3 text-lg font-semibold text-white shadow-md transition-colors hover:bg-primary/90 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 dark:focus:ring-offset-background-dark" href="/Home/Index">
+                Ana Sayfaya Dön
+            </a>
+        </div>
+    </div>
+
+</body>
+</html>

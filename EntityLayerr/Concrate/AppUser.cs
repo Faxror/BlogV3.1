@@ -13,6 +13,8 @@ namespace EntityLayerr.Concrate
         public string Surname { get; set; }
         public string Phone { get; set; }
 
+        public string ProfilImage { get; set; }
+
         public int ConfirimCode { get; set; }
 
     }

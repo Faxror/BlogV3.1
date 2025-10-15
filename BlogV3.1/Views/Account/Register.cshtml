@@ -47,8 +47,9 @@
                         Blog'a kaydol
                     </h2>
                 </div>
-                <form asp-action="Register" asp-controller="Account" class="mt-8 space-y-6" method="POST">
+                <form asp-action="Register" asp-controller="Account" class="mt-8 space-y-6" method="post">
                     <div class="space-y-4">
+                        <input type="hidden" asp-for="ProfilImage" value="https://ornek.com/gorsel.jpg ">
                         <div>
                             <label class="sr-only" for="first-name" asp-for="Username">Kullanıcı Adınız</label>
                             <input class="appearance-none rounded-lg relative block w-full px-3 py-3 border border-gray-300 dark:border-gray-600 placeholder-gray-500 dark:placeholder-gray-400 text-gray-900 dark:text-white bg-background-light dark:bg-background-dark focus:outline-none focus:ring-primary focus:border-primary focus:z-10 sm:text-sm" id="Username" name="Username" placeholder="Kullanıcı Adınız" required="" type="text" />

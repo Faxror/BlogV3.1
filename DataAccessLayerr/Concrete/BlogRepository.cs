@@ -30,6 +30,11 @@ namespace DataAccessLayerr.Concrete
             return dBContext.Authors.ToList();
         }
 
+        public List<AppUser> GetAllUser()
+        {
+            return dBContext.Users.ToList();
+        }
+
         public Author GetAuthor()
         {
            return dBContext.Authors.FirstOrDefault();

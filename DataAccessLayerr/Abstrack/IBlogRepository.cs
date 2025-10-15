@@ -26,5 +26,7 @@ namespace DataAccessLayerr.Abstrack
         Author GetAuthor();
 
         List<Author> GetAllAuthor();
+
+        List<AppUser> GetAllUser();
     }
 }

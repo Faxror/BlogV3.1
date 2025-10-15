@@ -24,6 +24,8 @@ namespace BlogV3._1.Models
         [MinLength(6, ErrorMessage = "Şifre en az 6 karakter olmalıdır.")]
         public string Password { get; set; }
 
+        public string ProfilImage { get; set; }
+
 
     }
 }

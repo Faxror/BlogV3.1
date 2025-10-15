@@ -1,21 +1,31 @@
-﻿using BusinesssLayer.Abstrack;
+﻿using BlogV3._1.Models;
+using BusinesssLayer.Abstrack;
 using DataAccessLayerr.Abstrack;
 using EntityLayerr.Concrate;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Hosting;
 using static System.Net.WebRequestMethods;
 
 namespace BlogV3._1.Controllers
 {
+    [Authorize(Roles = "Yönetici")]
     public class AdminController : Controller
     {
         private readonly IBlogServices blogServices;
+        private readonly UserManager<AppUser> _userManager;
+        private readonly RoleManager<AppRole> _roleManager;
 
-        public AdminController(IBlogServices blogServices)
+        public AdminController(IBlogServices blogServices, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
         {
             this.blogServices = blogServices;
+            _userManager = userManager;
+            _roleManager = roleManager;
         }
-
+        [Authorize(Roles = "Yönetici")]
         public IActionResult Index()
         {
             var blogs = blogServices.getBlogAll();
@@ -26,12 +36,236 @@ namespace BlogV3._1.Controllers
             return View(blogs);
         }
 
+
+      
+        [HttpGet]
+        public async Task<IActionResult> Settings()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+                return RedirectToAction("Login", "Account");
+
+            var viewModel = new UserEditYouViewModel
+            {
+                Id = user.Id,
+                FullName = $"{user.Name} {user.Surname}",
+                Email = user.Email,
+                IsTwoFactorEnabled = user.TwoFactorEnabled
+            };
+
+            return View(viewModel);
+        }
+
+
+        [HttpPost]
+        public async Task<IActionResult> UpdateProfile(UserEditYouViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login", "Account");
+
+            user.Email = model.Email;
+            var names = model.FullName.Split(' ', 2);
+            user.Name = names[0];
+            user.Surname = names.Length > 1 ? names[1] : "";
+
+            var result = await _userManager.UpdateAsync(user);
+            if (result.Succeeded)
+                TempData["Success"] = "Profil bilgileri güncellendi!";
+            else
+                TempData["Error"] = string.Join(" ", result.Errors.Select(e => e.Description));
+
+            return RedirectToAction("Settings");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ChangePassword(UserEditYouViewModel model)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null) return RedirectToAction("Login", "Account");
+
+            if (model.NewPassword != model.ConfirmPassword)
+            {
+                TempData["Error"] = "Yeni şifreler eşleşmiyor.";
+                return RedirectToAction("Settings");
+            }
+
+            var result = await _userManager.ChangePasswordAsync(user, model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+                TempData["Success"] = "Şifre başarıyla güncellendi.";
+            else
+                TempData["Error"] = string.Join(" ", result.Errors.Select(e => e.Description));
+
+            return RedirectToAction("Settings");
+        }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> ToggleTwoFactor()
+        {
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                TempData["Error"] = "Kullanıcı bulunamadı.";
+                return RedirectToAction("Settings");
+            }
+
+            bool newStatus = !user.TwoFactorEnabled;
+            var result = await _userManager.SetTwoFactorEnabledAsync(user, newStatus);
+
+            if (result.Succeeded)
+            {
+                TempData["Success"] = newStatus
+                    ? "İki faktörlü kimlik doğrulama etkinleştirildi."
+                    : "İki faktörlü kimlik doğrulama devre dışı bırakıldı.";
+            }
+            else
+            {
+                TempData["Error"] = "İşlem başarısız oldu.";
+            }
+
+            return RedirectToAction("Settings");
+        }
+
+
+
+
+
+        public async Task<IActionResult> Users()
+        {
+            var users = await _userManager.Users.ToListAsync();
+            var model = new List<UserWithRolesViewModel>();
+
+            foreach (var user in users)
+            {
+                var roles = await _userManager.GetRolesAsync(user);
+                model.Add(new UserWithRolesViewModel
+                {
+                    Id = user.Id,
+                    Name = user.Name,
+                    Surname = user.Surname,
+                    UserName = user.UserName,
+                    Email = user.Email,
+                    ProfilImage = user.ProfilImage,
+                    Roles = roles.ToList()
+                });
+            }
+
+            return View(model);
+        }
+
+
+        public async Task<IActionResult> DeleteUser(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            var result = await _userManager.DeleteAsync(user);
+
+            if (result.Succeeded)
+            {
+                return RedirectToAction("Login", "Account"); 
+            }
+
+            foreach (var error in result.Errors)
+            {
+                ModelState.AddModelError("", error.Description);
+            }
+
+            return View("Error", result.Errors);
+        }
+
+
+
+
+        [HttpGet]
+        public async Task<IActionResult> UserEdit(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+                return RedirectToAction("Users");
+
+            var user = await _userManager.FindByIdAsync(id);
+            if (user == null)
+                return NotFound();
+
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            var currentRole = userRoles.FirstOrDefault();
+
+      
+            var allRoles = await _roleManager.Roles
+                .Select(r => new SelectListItem
+                {
+                    Value = r.Name,
+                    Text = r.Name,
+                    Selected = r.Name == currentRole 
+                })
+                .ToListAsync();
+
+            var viewModel = new UserEditViewModel
+            {
+                Id = user.Id,
+                userName = user.UserName,
+                Name = user.Name,
+                Surname = user.Surname,
+                Email = user.Email,
+                PhoneNumber = user.PhoneNumber,
+                AllRoles = allRoles,
+                SelectedRole = currentRole
+            };
+
+            return View(viewModel);
+        }
+
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> UserEdit(UserEditViewModel model)
+        {
+            var user = await _userManager.FindByIdAsync(model.Id.ToString());
+            if (user == null)
+                return NotFound();
+
+            user.UserName = model.userName;
+            user.Name = model.Name;
+            user.Surname = model.Surname;
+            user.Email = model.Email;
+            user.PhoneNumber = model.PhoneNumber;
+
+            await _userManager.UpdateAsync(user);
+
+
+            var userRoles = await _userManager.GetRolesAsync(user);
+            if (userRoles.Any())
+                await _userManager.RemoveFromRolesAsync(user, userRoles);
+
+
+            if (!string.IsNullOrEmpty(model.SelectedRole))
+                await _userManager.AddToRoleAsync(user, model.SelectedRole);
+
+            TempData["SuccessMessage"] = "Kullanıcı bilgileri ve rolü başarıyla güncellendi!";
+            return RedirectToAction("Users");
+        }
+
+
         public async Task<IActionResult> Write()
         {
-            var blog = blogServices.getBlogAll();
-            return View(blog);
+            var authors = blogServices
+             .GetAllAuthor()
+             .ToDictionary(a => a.AuthorID, a => a.AuthorName);
 
+            ViewBag.Authors = authors;
+
+
+            var blogs = blogServices.getBlogAll();
+
+            return View(blogs);
         }
+
 
         [HttpGet]
         public IActionResult AddWrite()

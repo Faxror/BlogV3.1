@@ -3,13 +3,19 @@ Login ve Register sayfalarý yapýldý, diðer maddelere bakýlacak.
  -- Refresh token mekanizmasý yapýlacak.
  -- Kullanýcý rolleri olacak (Admin, User).
  -- Rol bazlý eriþim kontrolü yapýlacak.
- -- Kullanýcý profili sayfasý yapýlacak.
- -- Kullanýcý bilgileri güncellenebilecek.
  -- account controller katmanlý mimariye göre yapýlandýralacak.
 
 Yeni Blog ekleme ve bloglarý yönetme sayfasý yapýlacak, fronted kýsmý hazýr backend kýsmý yapýlacak.
- -- Blog ekleme sayfasý yapýlacak (Admin yetkisi ile).
- -- Blog silme ve güncelleme iþlemleri yapýlacak (Admin yetkisi ile).
  -- Bloglara yorum yapma özelliði eklenecek (Kayýtlý kullanýcýlar).
  -- Yorumlarý onaylama ve silme iþlemleri yapýlacak (Admin yetkisi ile).
 
+ Kullnýcýlar için profil sayfasý yapýlacak.
+ -- Kullanýcý profil bilgileri görüntülenecek.
+ -- Profil bilgileri güncellenebilecek.
+ -- Profil resmi yükleme özelliði eklenecek.
+ -- Kullanýcýlarýn kendi bloglarýný görüntüleyebileceði bir sayfa yapýlacak.
+ -- Kullanýcýlarýn kendi yorumlarýný görüntüleyebileceði bir sayfa yapýlacak.
+ -- Kullanýcýlarýn þifre deðiþtirme iþlemi yapýlacak.
+ -- Þifre sýfýrlama iþlemi için e-posta doðrulama yapýlacak.
+ -- Kullanýcýlarýn hesaplarýný silme iþlemi yapýlacak (Admin onayý ile).
+ -- Kullanýcýlarýn bildirim ayarlarýný yapabileceði bir sayfa yapýlacak.

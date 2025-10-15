@@ -1,0 +1,229 @@
+﻿@using BlogV3._1.Models
+@model UserEditViewModel
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Stitch Design</title>
+    <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;700;800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1193d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "foreground-light": "#111618",
+                        "foreground-dark": "#f6f7f8",
+                        "card-light": "#ffffff",
+                        "card-dark": "#182832",
+                        "border-light": "#e3e8eb",
+                        "border-dark": "#2d3f4d",
+                        "muted-foreground-light": "#617c89",
+                        "muted-foreground-dark": "#94a3b8"
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader"],
+                        "sans": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.5rem",
+                        "lg": "0.75rem",
+                        "xl": "1rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-sans text-foreground-light dark:text-foreground-dark">
+    <div class="flex min-h-screen w-full">
+        <aside class="w-64 flex-col border-r border-border-light dark:border-border-dark bg-card-light dark:bg-card-dark hidden lg:flex">
+            <div class="p-6 flex items-center gap-3">
+                <div class="size-8 text-primary">
+                </div>
+                <h2 class="text-xl font-bold font-display">
+                    Yönetim Paneli
+                </h2>
+            </div>
+            <nav class="flex flex-col gap-1 p-4">
+                <a class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground-light dark:text-muted-foreground-dark hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors" href="/Admin/Index">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                        <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                    <span>Anasayfa</span>
+                </a>
+                <a class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground-light dark:text-muted-foreground-dark hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors" href="/Admin/Write">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" x2="8" y1="13" y2="13"></line>
+                        <line x1="16" x2="8" y1="17" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <span>Yazılar</span>
+                </a>
+                <a class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground-light dark:text-muted-foreground-dark hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors" href="#">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>
+                    </svg>
+                    <span>İstatistikler</span>
+                </a>
+                <a class="flex items-center gap-3 rounded-md bg-primary/10 dark:bg-primary/20 px-3 py-2 text-primary dark:text-primary transition-colors" href="/Admin/Users">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="12" cy="7" r="4"></circle>
+                    </svg>
+                    <span>Kullanıcılar</span>
+                </a>
+            </nav>
+            <div class="mt-auto p-4">
+                <a class="flex items-center gap-3 rounded-md px-3 py-2 text-muted-foreground-light dark:text-muted-foreground-dark hover:bg-primary/10 dark:hover:bg-primary/20 hover:text-foreground-light dark:hover:text-foreground-dark transition-colors" href="/Admin/Settings">
+                    <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 0 2l-.15.08a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.38a2 2 0 0 0-.73-2.73l-.15-.1a2 2 0 0 1 0-2l.15-.08a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z">
+                        </path>
+                        <circle cx="12" cy="12" r="3"></circle>
+                    </svg>
+                    <span>Ayarlar</span>
+                </a>
+            </div>
+        </aside>
+        <div class="flex flex-1 flex-col">
+            <header class="sticky top-0 z-10 flex h-16 items-center justify-between border-b border-border-light dark:border-border-dark bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-sm px-6">
+                <div class="flex items-center gap-4">
+                    <button class="lg:hidden">
+                        <svg class="h-6 w-6" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <line x1="3" x2="21" y1="12" y2="12"></line>
+                            <line x1="3" x2="21" y1="6" y2="6"></line>
+                            <line x1="3" x2="21" y1="18" y2="18"></line>
+                        </svg>
+                    </button>
+                    <h1 class="text-xl font-semibold">Kullanıcılar</h1>
+                </div>
+                <div class="flex items-center gap-4">
+                    <button class="flex items-center justify-center rounded-full size-10 bg-card-light dark:bg-card-dark hover:bg-primary/10 dark:hover:bg-primary/20 text-muted-foreground-light dark:text-muted-foreground-dark transition-colors">
+                        <svg fill="currentColor" height="20px" viewBox="0 0 256 256" width="20px" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M221.8,175.94C216.25,166.38,208,139.33,208,104a80,80,0,1,0-160,0c0,35.34-8.26,62.38-13.81,71.94A16,16,0,0,0,48,200H88.81a40,40,0,0,0,78.38,0H208a16,16,0,0,0,13.8-24.06ZM128,216a24,24,0,0,1-22.62-16h45.24A24,24,0,0,1,128,216ZM48,184c7.7-13.24,16-43.92,16-80a64,64,0,1,1,128,0c0,36.05,8.28,66.73,16,80Z">
+                            </path>
+                        </svg>
+                    </button>
+                    <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuCPi0D1UHowynk8Wxc5sh7JL3e6M3jzeoitKFE9JJLyXpvjh6JgwtJMRVAOEFR-kxjpSW5tBFvhtbf7K0nMz_WfF0D1l5mKjDI0NgwpMuIpRmWtG9KhB-NrLgXxkX4HZLa0z1_vvFBAVy2A9S2Mhno4HDgc4mARRwq2X61obmIxWjZvjQZMLOlMk1YR9Y_BhKE5PZE3z8aSPmlHIcntSDeqi9UPRUgtDEs-vPefAQO5f6BIlX-Ysubrw2G9ffhKNvMrMzq0t9i711Su");'></div>
+                </div>
+            </header>
+            <main class="flex-1 p-6 relative">
+                <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark">
+                    <div class="flex items-center justify-between mb-4">
+                        <h2 class="text-2xl font-bold">Kullanıcı Listesi</h2>
+                        <button class="flex items-center justify-center rounded-lg h-10 px-6 bg-primary text-white text-sm font-bold hover:bg-primary/90 transition-colors">
+                            Yeni Kullanıcı Ekle
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-left">
+                            <thead>
+                                <tr class="border-b border-border-light dark:border-border-dark">
+                                    <th class="p-4 font-semibold">İsim</th>
+                                    <th class="p-4 font-semibold">E-posta</th>
+                                    <th class="p-4 font-semibold">Rol</th>
+                                    <th class="p-4 font-semibold">Kayıt Tarihi</th>
+                                    <th class="p-4 font-semibold text-right">İşlemler</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <tr class="border-b border-border-light dark:border-border-dark">
+                                    <td class="p-4 flex items-center gap-3">
+                                        <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full size-10" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDMpXuAi5FKxZNawXmX3lkhhZGaEozu1nMP-unXnzLOF0U-VnSpHM5IaBH7oYB-_gFH3HnpzqFjggnxnNRwOwRJ_7sOa3mC8zh4zQVpiJ2DSwdnzzxnbDO9Vt97ydsRqKI5l8j0vmKBTZ12eH8-q2lQMqFYRZOao-dzp7Pp6F6yZUj8oXvlJAyTdv-WkbVkRnS5xrWMR2bLccu_hJL5sGgx4EOPig3CBws9gBTbd9ZMQUiMu5Rp9qOR-yAEi98mRg3hALFI0XdA5hyB");'></div>
+                                        <div>
+                                            <p class="font-medium">@Model.Name @Model.Surname</p>
+                                            <p class="text-sm text-muted-foreground-light dark:text-muted-foreground-dark">@Model.userName</p>
+                                        </div>
+                                    </td>
+                                    <td class="p-4">@Model.Email</td>
+                                    <td class="p-4"><span class="px-2 py-1 text-xs font-semibold rounded-full bg-primary/10 text-primary">Sun</span></td>
+                                    <td class="p-4"></td>
+                                    <td class="p-4 text-right"> 
+                                        <a  class="p-2 rounded hover:bg-primary/10 dark:hover:bg-primary/20 text-muted-foreground-light dark:text-muted-foreground-dark">
+                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
+                                        </a>
+                                        <a class="p-2 rounded hover:bg-red-500/10 dark:hover:bg-red-500/20 text-muted-foreground-light dark:text-muted-foreground-dark hover:text-red-500 dark:hover:text-red-500">
+                                            <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path><line x1="10" x2="10" y1="11" y2="17"></line><line x1="14" x2="14" y1="11" y2="17"></line></svg>
+                                        </a>
+                                    </td>
+                                </tr>
+                                
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm" id="edit-user-modal">
+                    <div class="bg-card-light dark:bg-card-dark rounded-xl border border-border-light dark:border-border-dark shadow-xl w-full max-w-lg m-4">
+                        <div class="flex items-center justify-between p-6 border-b border-border-light dark:border-border-dark">
+                            <h3 class="text-xl font-bold">Kullanıcıyı Düzenle</h3>
+                            <button class="p-2 rounded-full hover:bg-primary/10 dark:hover:bg-primary/20 text-muted-foreground-light dark:text-muted-foreground-dark transition-colors">
+                                <svg class="h-5 w-5" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <line x1="18" x2="6" y1="6" y2="18"></line>
+                                    <line x1="6" x2="18" y1="6" y2="18"></line>
+                                </svg>
+                            </button>
+                        </div>
+                        <div class="p-6">
+                            <form method="post" asp-action="UserEdit" asp-controller="Admin" class="space-y-6">
+                                <input type="hidden" asp-for="Id" />
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Kullanıcı Adı</label>
+                                    <input asp-for="userName" class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md px-3 py-2 focus:ring-2 focus:ring-primary/50" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Ad</label>
+                                    <input asp-for="Name" class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md px-3 py-2 focus:ring-2 focus:ring-primary/50" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Soyad</label>
+                                    <input asp-for="Surname" class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md px-3 py-2 focus:ring-2 focus:ring-primary/50" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">E-posta</label>
+                                    <input asp-for="Email" type="email" class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md px-3 py-2 focus:ring-2 focus:ring-primary/50" />
+                                </div>
+
+                                <div>
+                                    <label class="block text-sm font-medium mb-1">Telefon</label>
+                                    <input asp-for="PhoneNumber" type="number" class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md px-3 py-2 focus:ring-2 focus:ring-primary/50" />
+                                </div>
+                                <div>
+                                    <label class="block text-sm font-medium text-muted-foreground-light dark:text-muted-foreground-dark mb-1" for="role">Rol</label>
+                                 <select asp-for="SelectedRole" asp-items="Model.AllRoles" class="w-full bg-background-light dark:bg-background-dark border border-border-light dark:border-border-dark rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary/50">
+                                         <option value="">Rol seçiniz...</option>
+                                    </select>
+                                </div>
+                                <div class="flex justify-end gap-3 pt-6 border-t border-border-light dark:border-border-dark">
+                                    <a href="/Admin/Users" class="px-6 py-2 rounded-lg bg-card-light border text-sm font-semibold hover:bg-primary/10 transition">İptal</a>
+                                    <button type="submit" class="px-6 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:bg-primary/90 transition">Kaydet</button>
+                                </div>
+                            </form>
+
+                        </div>
+                   
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

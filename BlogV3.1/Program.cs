@@ -1,12 +1,14 @@
-using BlogV3._1.Models;
+﻿using BlogV3._1.Models;
 using BusinesssLayer.Abstrack;
 using BusinesssLayer.Concrete;
 using DataAccessLayer.Concrete;
 using DataAccessLayerr.Abstrack;
 using DataAccessLayerr.Concrete;
 using EntityLayerr.Concrate;
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using System.Globalization;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -18,7 +20,16 @@ builder.Services.AddIdentity<AppUser, AppRole>()
     .AddDefaultTokenProviders().AddErrorDescriber<AuthorIdentityValidator>();
 builder.Services.AddDbContext<DBContext>();
 builder.Services.AddScoped<IBlogServices, BlogManager>();
-builder.Services.AddScoped<IBlogRepository, BlogRepository>();  
+builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.AccessDeniedPath = "/Account/AccessDenied";
+        options.LoginPath = "/Account/Login"; 
+    });
+
 
 var app = builder.Build();
     
@@ -29,6 +40,9 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+
+app.UseStatusCodePagesWithReExecute("/Account/StatusCode", "?code={0}");
+
 
 app.UseHttpsRedirection();
 app.UseRouting();

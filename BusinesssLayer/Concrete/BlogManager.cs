@@ -28,6 +28,11 @@ namespace BusinesssLayer.Concrete
              return _blogRepository.GetAllAuthor();
         }
 
+        public List<AppUser> GetAllUser()
+        {
+            return _blogRepository.GetAllUser();
+        }
+
         public Author GetAuthor()
         {
             return _blogRepository.GetAuthor();

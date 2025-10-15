@@ -1,0 +1,74 @@
+﻿<!DOCTYPE html>
+
+<html class="light" lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>500 - Sunucu Hatası</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..800;1,6..72,200..800&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1193d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                    },
+                    fontFamily: {
+                        "display": ["Newsreader"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Newsreader', serif;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark">
+    <div class="relative flex h-auto min-h-screen w-full flex-col group/design-root overflow-x-hidden font-display">
+        <div class="layout-container flex h-full grow flex-col">
+            <div class="px-4 md:px-20 lg:px-40 flex flex-1 justify-center py-5">
+                <div class="layout-content-container flex flex-col max-w-[960px] flex-1">
+                    <div class="flex flex-col flex-1 justify-center items-center px-4 py-6 text-center">
+                        <div class="flex flex-col items-center gap-6">
+                            <div class="bg-center bg-no-repeat aspect-video bg-cover rounded-lg w-full max-w-[360px]" data-alt="A smiling robot character indicating a technical issue." style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuBFNBVX-w_fID8sTCnKKrP6pyOUsk-2UX0Or1T_TR9I9uXmZv1DQz6Bew17U3R9Iq55XjTxEBOFMUQW_bs4aQm6X7xeuJo4UN2bsjCA9ymu5WSsI5rG0qpNEPTgNdUeeCKrF0Yuv0XlVs0eQgDe9F4mZEsFC9a2SrUqSO9FytiRIWXniLARt7IEShMDmFBWDHESOjqzUa1-E6USFiNWVMeIyMZA0vRyw5cljhPAes2k8IOoQHmoQgIppx1nK-r23HnZVWVZld3mOAQD");'></div>
+                            <div class="flex max-w-lg flex-col items-center gap-2">
+                                <p class="text-gray-900 dark:text-gray-100 text-3xl font-bold leading-tight tracking-[-0.015em] text-center">Teknik Bir Mola Verdik</p>
+                                <p class="text-gray-700 dark:text-gray-300 text-base font-normal leading-normal text-center">
+                                    Beklenmedik bir sorunla karşılaştık ve teknik ekibimiz şu an bu konuyu çözmek için çalışıyor. Endişelenmeyin, verileriniz güvende. Kısa bir süre sonra her şey normale dönecek.
+                                </p>
+                            </div>
+                            <div class="flex flex-col sm:flex-row items-center gap-4">
+                                <button href ="/Home/Index" class="flex w-full sm:w-auto min-w-[84px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-bold leading-normal tracking-[0.015em] hover:bg-primary/90 transition-colors">
+                                    <span class="truncate">Ana Sayfaya Dön</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <footer class="flex flex-col gap-6 px-5 py-10 text-center">
+                        <div class="flex flex-wrap items-center justify-center gap-6">
+                            <a class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light text-base font-normal leading-normal min-w-40" href="#">Hakkımda</a>
+                            <a class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light text-base font-normal leading-normal min-w-40" href="#">Blog</a>
+                            <a class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-primary-light text-base font-normal leading-normal min-w-40" href="#">İletişim</a>
+                        </div>
+                        <p class="text-gray-500 dark:text-gray-400 text-base font-normal leading-normal">© 2023 Kişisel Blog</p>
+                    </footer>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

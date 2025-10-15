@@ -39,7 +39,17 @@ namespace BlogV3._1.Controllers
                 var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
                 if (user.EmailConfirmed)
                 {
-                    return RedirectToAction("Index", "Home");
+                    if (User.IsInRole("Admin"))
+                    {
+                        return RedirectToAction("Index", "Admin");
+                    }
+                    else if (User.IsInRole("Writer")) {
+                        return RedirectToAction("Index", "Writer");
+                    }
+                    else
+                    {
+                        return RedirectToAction("Index", "Home");
+                    }
                 }
                 else
                 {
@@ -70,6 +80,7 @@ namespace BlogV3._1.Controllers
                     Name = registerViewModel.Name,
                     Surname = registerViewModel.Surname,
                     Phone = registerViewModel.Phone,
+                    ProfilImage = registerViewModel.ProfilImage,
                     ConfirimCode = confirimCode
 
                 };
@@ -77,6 +88,8 @@ namespace BlogV3._1.Controllers
                 var result = await _userManager.CreateAsync(appUser, registerViewModel.Password);
                 if (result != null && result.Succeeded)
                 {
+                    await _userManager.AddToRoleAsync(appUser, "Kullanıcı");
+
                     SmtpClient smtpClient = new SmtpClient("mt-prime-win.guzelhosting.com", 587);
                     smtpClient.Credentials = new NetworkCredential("information@pekova.com.tr", "2e3Gd9j3*");
                     smtpClient.EnableSsl = true;
@@ -275,5 +288,23 @@ namespace BlogV3._1.Controllers
             return View();
         }
 
+        [AllowAnonymous]
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
+
+        [Route("Account/StatusCode")]
+        public IActionResult StatusCodePage(int code)
+        {
+            if (code == 404)
+                return View("NotFound");
+
+           if (code == 500)
+                return View("ServerError");
+
+            return View("Error");
+        }
     }
 }
