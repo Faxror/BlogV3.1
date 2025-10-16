@@ -2,12 +2,14 @@
 using BusinesssLayer.Abstrack;
 using DataAccessLayerr.Abstrack;
 using EntityLayerr.Concrate;
+using EntityLayerr.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
+using System.Globalization;
 using static System.Net.WebRequestMethods;
 
 namespace BlogV3._1.Controllers
@@ -336,5 +338,24 @@ namespace BlogV3._1.Controllers
             TempData["SuccessMessage"] = "Yazı başarıyla eklendi!";
             return RedirectToAction("AddWrite");
         }
+
+        [HttpGet]
+        public async Task<IActionResult> statistics(DateTime? startDate, DateTime? endDate)
+        {
+            var start = startDate ?? new DateTime(DateTime.Now.Year, 1, 1);
+            var end = endDate ?? new DateTime(DateTime.Now.Year, 12, 31);
+
+            var monthlyStats = blogServices.GetMonthlyStatistics(start, end);
+
+            var viewModel = new StatisticsViewModel
+            {
+                StartDate = start,
+                EndDate = end,
+                MonthlyStats = monthlyStats
+            };
+
+            return View(viewModel);
+        }
+           
     }
 }

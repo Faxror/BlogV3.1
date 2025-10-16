@@ -39,11 +39,12 @@ namespace BlogV3._1.Controllers
                 var user = await _userManager.FindByNameAsync(loginViewModel.UserName);
                 if (user.EmailConfirmed)
                 {
-                    if (User.IsInRole("Admin"))
+                    if (User.IsInRole("Yönetici"))
                     {
                         return RedirectToAction("Index", "Admin");
                     }
-                    else if (User.IsInRole("Writer")) {
+                    else if (User.IsInRole("Writer"))
+                    {
                         return RedirectToAction("Index", "Writer");
                     }
                     else
@@ -198,7 +199,7 @@ namespace BlogV3._1.Controllers
             }
 
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
-            var confirmationLink = Url.Action("ChangePassword","Account",new { email = Email, token = WebUtility.UrlEncode(token) },protocol: HttpContext.Request.Scheme);
+            var confirmationLink = Url.Action("ChangePassword", "Account", new { email = Email, token = WebUtility.UrlEncode(token) }, protocol: HttpContext.Request.Scheme);
 
             string emailBody = $@"
                 <p>Merhaba {user},</p>
@@ -206,7 +207,7 @@ namespace BlogV3._1.Controllers
                 <p><a href=""{confirmationLink}"">Şifreyi sıfırla</a></p>
                 <p>Bu bağlantı yalnızca bir kez kullanılabilir.</p>";
 
-            var mail = new MailMessage("information@pekova.com.tr",Email, "Blog - Şifre Sıfırlama Onayı", emailBody)
+            var mail = new MailMessage("information@pekova.com.tr", Email, "Blog - Şifre Sıfırlama Onayı", emailBody)
             {
                 IsBodyHtml = true
             };
@@ -246,7 +247,8 @@ namespace BlogV3._1.Controllers
                 decodedToken
             );
 
-            if (!isValid){
+            if (!isValid)
+            {
                 ViewBag.ErrorMessage = "Bu link geçerliliğini yitirmiştir.";
                 return View("ChangePasswordInvalid", "Account");
 
@@ -301,10 +303,16 @@ namespace BlogV3._1.Controllers
             if (code == 404)
                 return View("NotFound");
 
-           if (code == 500)
+            if (code == 500)
                 return View("ServerError");
 
             return View("Error");
+        }
+
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Index", "Home");
         }
     }
 }

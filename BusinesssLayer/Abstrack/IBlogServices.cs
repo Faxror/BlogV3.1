@@ -1,4 +1,5 @@
 ﻿using EntityLayerr.Concrate;
+using EntityLayerr.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,5 +29,8 @@ namespace BusinesssLayer.Abstrack
        List<Author> GetAllAuthor();
 
        List<AppUser> GetAllUser();
+
+        List<PostStatisticsViewModel> GetMonthlyStatistics(DateTime startDate, DateTime endDate);
+
     }
 }

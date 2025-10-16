@@ -3,6 +3,7 @@ using DataAccessLayerr.Abstrack;
 using EntityLayerr.Concrate;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,6 +51,12 @@ namespace DataAccessLayerr.Concrete
             return dBContext.Blogss.FirstOrDefault(b => b.Id == id);
         }
 
+        public List<Blogs> GetBlogsByDateRange(DateTime startDate, DateTime endDate)
+        {
+            return dBContext.Blogss.Where(x => x.BlogTime >= startDate && x.BlogTime <= endDate).ToList();
+        }
+
+
         public Blogs getBlogWithFirst()
         {
             return dBContext.Blogss.OrderByDescending(b => b.BlogTime).FirstOrDefault();
@@ -61,6 +68,8 @@ namespace DataAccessLayerr.Concrete
             return dBContext.Authors.FirstOrDefault(a => a.AuthorID == id);
 
         }
+
+ 
 
         public void removeBlog(int id)
         {

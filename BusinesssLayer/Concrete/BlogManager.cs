@@ -1,8 +1,10 @@
 ﻿using BusinesssLayer.Abstrack;
 using DataAccessLayerr.Abstrack;
 using EntityLayerr.Concrate;
+using EntityLayerr.Models;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -56,6 +58,24 @@ namespace BusinesssLayer.Concrete
         public Author getByAuthorİd(int id)
         {
            return _blogRepository.getByAuthorİd(id);
+        }
+
+        public List<PostStatisticsViewModel> GetMonthlyStatistics(DateTime startDate, DateTime endDate)
+        {
+            var blogs = _blogRepository.GetBlogsByDateRange(startDate, endDate);
+
+            var stats = blogs
+                .GroupBy(x => x.BlogTime.Month)
+                .Select(g => new PostStatisticsViewModel
+                {
+                    Month = new DateTime(DateTime.Now.Year, g.Key, 1).ToString("MMMM", new CultureInfo("tr-TR")),
+                    PostCount = g.Count()
+                })
+                .OrderBy(x => DateTime.ParseExact(x.Month, "MMMM", new CultureInfo("tr-TR")).Month)
+                .ToList();
+
+            return stats;
+
         }
 
         public void removeBlog(int id)
