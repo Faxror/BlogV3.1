@@ -1,8 +1,6 @@
 Login ve Register sayfalarý yapýldý, diðer maddelere bakýlacak.
  -- JWT token üretilecek.
  -- Refresh token mekanizmasý yapýlacak.
- -- Kullanýcý rolleri olacak (Admin, User).
- -- Rol bazlý eriþim kontrolü yapýlacak.
  -- account controller katmanlý mimariye göre yapýlandýralacak.
 
 Yeni Blog ekleme ve bloglarý yönetme sayfasý yapýlacak, fronted kýsmý hazýr backend kýsmý yapýlacak.
@@ -16,6 +14,33 @@ Yeni Blog ekleme ve bloglarý yönetme sayfasý yapýlacak, fronted kýsmý hazýr back
  -- Kullanýcýlarýn kendi bloglarýný görüntüleyebileceði bir sayfa yapýlacak.
  -- Kullanýcýlarýn kendi yorumlarýný görüntüleyebileceði bir sayfa yapýlacak.
  -- Kullanýcýlarýn þifre deðiþtirme iþlemi yapýlacak.
- -- Þifre sýfýrlama iþlemi için e-posta doðrulama yapýlacak.
  -- Kullanýcýlarýn hesaplarýný silme iþlemi yapýlacak (Admin onayý ile).
  -- Kullanýcýlarýn bildirim ayarlarýný yapabileceði bir sayfa yapýlacak.
+ -- Kullanýcýlarýn favori bloglarýný iþaretleyebileceði ve görüntüleyebileceði bir özellik eklenecek.
+
+
+ Kategori yönetim sayfasý yapýlacak (Admin yetkisi ile).
+ -- Kategori ekleme, düzenleme ve silme iþlemleri yapýlacak.
+ -- Kategorilere blog atama iþlemi yapýlacak.
+ -- Kategorilere göre blog filtreleme özelliði eklenecek.
+ -- Kategori bazýnda blog istatistikleri görüntüleme özelliði eklenecek.
+ -- Kategori açýklamalarý ekleme ve düzenleme iþlemleri yapýlacak.
+ -- Kategori sýralama özelliði eklenecek.
+ -- Kategori bazýnda popüler bloglarý görüntüleme özelliði eklenecek.
+ -- Blog eklerken kategori seçme iþlemi yapýlacak.
+
+
+SQL Ýnjector 
+-- Tüm veritabaný iþlemlerinde parametreli sorgular kullanýlacak.
+-- Kullanýcý girdileri doðrulanacak ve temizlenecek.
+-- Güvenlik duvarý ve izleme araçlarý kullanýlacak.
+-- Düzenli güvenlik taramalarý yapýlacak.
+-- En az ayrýcalýk prensibi uygulanacak.
+-- Hata mesajlarý kullanýcýya detaylý bilgi vermeyecek þekilde yapýlandýrýlacak.
+-- Güvenlik güncellemeleri ve yamalar düzenli olarak uygulanacak.
+-- SQL sorgularý loglanacak ve izlenecek.
+-- Web uygulama güvenlik duvarý (WAF) kullanýlacak.
+-- Giriþ denemeleri sýnýrlanacak ve baþarýsýz giriþler izlenecek.
+-- Güçlü parola politikalarý uygulanacak.
+-- Çok faktörlü kimlik doðrulama (MFA) kullanýlacak.
+

@@ -20,13 +20,16 @@ namespace BlogV3._1.Controllers
         private readonly IBlogServices blogServices;
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<AppRole> _roleManager;
+        private readonly ICategoryServices _categoryServices;
 
-        public AdminController(IBlogServices blogServices, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager)
+        public AdminController(IBlogServices blogServices, UserManager<AppUser> userManager, RoleManager<AppRole> roleManager, ICategoryServices categoryServices)
         {
             this.blogServices = blogServices;
             _userManager = userManager;
             _roleManager = roleManager;
+            _categoryServices = categoryServices;
         }
+
         [Authorize(Roles = "Yönetici")]
         public IActionResult Index()
         {
@@ -356,6 +359,45 @@ namespace BlogV3._1.Controllers
 
             return View(viewModel);
         }
-           
+        
+        
+        public async Task<IActionResult> Categories()
+        {
+            var categories = await Task.Run(() => _categoryServices.GetCategories());
+            return View(categories);
+        }
+
+
+        [HttpGet]
+        public IActionResult addCategories()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> addCategories(Category category)
+        {
+            await Task.Run(() => _categoryServices.CategoryAdd(category));
+            return RedirectToAction("Categories", "Admin");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> updateCategory(int id)
+        {
+            var category = await Task.Run(() => _categoryServices.GetById(id));
+            return View(category);
+        }
+        [HttpPost]
+        public async Task<IActionResult> updateCategory(Category category)
+        {
+            await Task.Run(() => _categoryServices.CategoryUpdate(category));
+            return RedirectToAction("Categories", "Admin");
+        }
+
+        public async Task<IActionResult> deleteCategory(int id)
+        {
+            await Task.Run(() => _categoryServices.CategoryDelete(id));
+            return RedirectToAction("Categories", "Admin");
+        }
     }
 }

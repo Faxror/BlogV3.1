@@ -89,7 +89,7 @@ namespace BlogV3._1.Controllers
                 var result = await _userManager.CreateAsync(appUser, registerViewModel.Password);
                 if (result != null && result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(appUser, "Kullanıcı");
+                    await _userManager.AddToRoleAsync(appUser, "Okur");
 
                     SmtpClient smtpClient = new SmtpClient("mt-prime-win.guzelhosting.com", 587);
                     smtpClient.Credentials = new NetworkCredential("information@pekova.com.tr", "2e3Gd9j3*");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DataAccessLayerr.Migrations
 {
     [DbContext(typeof(DBContext))]
-    [Migration("20251010053724_UpdateBlog")]
-    partial class UpdateBlog
+    [Migration("20251017002042_UpdateDatabase")]
+    partial class UpdateDatabase
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -66,6 +66,9 @@ namespace DataAccessLayerr.Migrations
                     b.Property<int>("AccessFailedCount")
                         .HasColumnType("int");
 
+                    b.Property<int?>("CategoryId")
+                        .HasColumnType("int");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
@@ -111,6 +114,10 @@ namespace DataAccessLayerr.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("ProfilImage")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -126,6 +133,8 @@ namespace DataAccessLayerr.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -204,6 +213,9 @@ namespace DataAccessLayerr.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("int");
+
                     b.Property<bool>("status")
                         .HasColumnType("bit");
 
@@ -211,7 +223,33 @@ namespace DataAccessLayerr.Migrations
 
                     b.HasIndex("AuthorID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("Blogss");
+                });
+
+            modelBuilder.Entity("EntityLayerr.Concrate.Category", b =>
+                {
+                    b.Property<int>("CategoryId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("CategoryId"));
+
+                    b.Property<string>("CategoryDescription")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CategoryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("CategoryStatus")
+                        .HasColumnType("bit");
+
+                    b.HasKey("CategoryId");
+
+                    b.ToTable("Categories");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -317,6 +355,13 @@ namespace DataAccessLayerr.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
+            modelBuilder.Entity("EntityLayerr.Concrate.AppUser", b =>
+                {
+                    b.HasOne("EntityLayerr.Concrate.Category", null)
+                        .WithMany("AppUsers")
+                        .HasForeignKey("CategoryId");
+                });
+
             modelBuilder.Entity("EntityLayerr.Concrate.Blogs", b =>
                 {
                     b.HasOne("EntityLayerr.Concrate.Author", "Author")
@@ -325,7 +370,15 @@ namespace DataAccessLayerr.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("EntityLayerr.Concrate.Category", "Category")
+                        .WithMany("Blogss")
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Author");
+
+                    b.Navigation("Category");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<int>", b =>
@@ -381,6 +434,13 @@ namespace DataAccessLayerr.Migrations
 
             modelBuilder.Entity("EntityLayerr.Concrate.Author", b =>
                 {
+                    b.Navigation("Blogss");
+                });
+
+            modelBuilder.Entity("EntityLayerr.Concrate.Category", b =>
+                {
+                    b.Navigation("AppUsers");
+
                     b.Navigation("Blogss");
                 });
 #pragma warning restore 612, 618

@@ -5,21 +5,14 @@
 namespace DataAccessLayerr.Migrations
 {
     /// <inheritdoc />
-    public partial class UpdateBlog : Migration
+    public partial class UpdateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "BlogRating",
-                table: "Blogss",
-                type: "int",
-                nullable: false,
-                defaultValue: 0);
-
             migrationBuilder.AddColumn<bool>(
-                name: "status",
-                table: "Blogss",
+                name: "CategoryStatus",
+                table: "Categories",
                 type: "bit",
                 nullable: false,
                 defaultValue: false);
@@ -29,12 +22,8 @@ namespace DataAccessLayerr.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "BlogRating",
-                table: "Blogss");
-
-            migrationBuilder.DropColumn(
-                name: "status",
-                table: "Blogss");
+                name: "CategoryStatus",
+                table: "Categories");
         }
     }
 }

@@ -21,6 +21,8 @@ builder.Services.AddIdentity<AppUser, AppRole>()
 builder.Services.AddDbContext<DBContext>();
 builder.Services.AddScoped<IBlogServices, BlogManager>();
 builder.Services.AddScoped<IBlogRepository, BlogRepository>();
+builder.Services.AddScoped<ICategoryServices, CategoryManager>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 
 
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
