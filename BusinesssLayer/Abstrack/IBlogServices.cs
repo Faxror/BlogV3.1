@@ -32,5 +32,8 @@ namespace BusinesssLayer.Abstrack
 
         List<PostStatisticsViewModel> GetMonthlyStatistics(DateTime startDate, DateTime endDate);
 
+        List<Comment> GetCommentsByPost(int postId);
+        Comment CommentsAdd(Comment comment);
+
     }
 }

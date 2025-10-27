@@ -120,6 +120,16 @@
                                     }
                               </select>
                         </div>
+                            <div class="bg-card-light dark:bg-card-dark p-6 rounded-lg border border-border-light dark:border-border-dark space-y-4">
+                                <label class="text-lg font-semibold" asp-for="CategoryID" for="tags">Etiketler</label>
+                                <select asp-for="CategoryID" class="form-select w-full mt-2 rounded-lg border-border-light dark:border-border-dark bg-background-light dark:bg-background-dark focus:border-primary focus:ring-primary text-base p-3 text-foreground-light dark:text-foreground-dark">
+                                    <option value="">Kategori Seçin</option>
+                                    @foreach (var item in (List<SelectListItem>)ViewBag.s)
+                                    {
+                                        <option value="@item.Value">@item.Text</option>
+                                    }
+                                </select>
+                            </div>
                     </div>
                 </div>
                 </form>

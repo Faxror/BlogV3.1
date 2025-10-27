@@ -32,5 +32,8 @@ namespace DataAccessLayerr.Abstrack
 
 
         List<Blogs> GetBlogsByDateRange(DateTime startDate, DateTime endDate);
+
+        List<Comment> GetCommentsWithUser(int postId);
+        Comment CommentsAdd(Comment comment);
     }
 }

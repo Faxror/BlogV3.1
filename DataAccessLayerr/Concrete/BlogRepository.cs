@@ -3,6 +3,7 @@ using DataAccessLayerr.Abstrack;
 using EntityLayerr.Concrate;
 using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -24,6 +25,13 @@ namespace DataAccessLayerr.Concrete
             dBContext.Blogss.Add(blog);
             dBContext.SaveChanges();
             return blog;
+        }
+
+        public Comment CommentsAdd(Comment comment)
+        {
+           dBContext.Comments.Add(comment);
+           dBContext.SaveChanges();
+            return comment;
         }
 
         public List<Author> GetAllAuthor()
@@ -69,7 +77,10 @@ namespace DataAccessLayerr.Concrete
 
         }
 
- 
+        public List<Comment> GetCommentsWithUser(int postId)
+        {
+            return dBContext.Comments.Include(x => x.UserId).Where(c => c.PostId == postId).OrderByDescending(Index => Index.CreatedAt).ToList();
+        }
 
         public void removeBlog(int id)
         {

@@ -17,5 +17,8 @@ namespace EntityLayerr.Concrate
 
         public int ConfirimCode { get; set; }
 
+        public ICollection<Comment> Comments { get; set; }
+
+
     }
 }

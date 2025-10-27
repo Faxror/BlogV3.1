@@ -60,6 +60,13 @@ namespace BusinesssLayer.Concrete
            return _blogRepository.getByAuthorİd(id);
         }
 
+        public List<Comment> GetCommentsByPost(int postId)
+        {
+           return _blogRepository.GetCommentsWithUser(postId);
+        }
+
+
+
         public List<PostStatisticsViewModel> GetMonthlyStatistics(DateTime startDate, DateTime endDate)
         {
             var blogs = _blogRepository.GetBlogsByDateRange(startDate, endDate);
@@ -86,6 +93,11 @@ namespace BusinesssLayer.Concrete
         public Blogs UpdateBlog(Blogs blogs)
         {
            return _blogRepository.UpdateBlog(blogs);
+        }
+
+        public Comment CommentsAdd(Comment comment)
+        {
+            return _blogRepository.CommentsAdd(comment);
         }
     }
 }

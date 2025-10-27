@@ -1,0 +1,76 @@
+﻿@model BlogV3._1.Models.CommentViewModel
+
+<div class="space-y-8">
+    <h2 class="text-2xl font-bold text-neutral-900 dark:text-white">
+        Yorumlar (@Model.Comments?.Count())
+    </h2>
+
+    <div class="flex items-start gap-4">
+        <form asp-controller="Home" asp-action="CommentAdds" method="post" class="flex w-full gap-4">
+            <input type="hidden" name="postid" value="@Model.NewComment.PostId" />
+
+            <div class="h-10 w-10 shrink-0 rounded-full bg-cover bg-center"
+                 style="background-image: url('@(Model.NewComment.User?.ProfilImage ?? "/upload/profile.png")')">
+            </div>
+
+            <div class="flex-1">
+                <div class="relative">
+                    <textarea name="content"
+                              class="form-textarea w-full rounded-lg border-neutral-300 bg-background-light dark:bg-background-dark dark:border-neutral-700 p-3 pr-28 text-sm focus:border-primary focus:ring-primary"
+                              placeholder="Bir yorum ekle..." rows="3"></textarea>
+
+                    <button type="submit"
+                            class="absolute bottom-2 right-2 rounded-lg bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary/90">
+                        Post
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div class="space-y-6">
+        @if (Model.Comments != null && Model.Comments.Any())
+        {
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="flex items-start gap-4">
+                    <div class="h-10 w-10 shrink-0 rounded-full bg-cover bg-center"
+                         style="background-image: url('@(comment.User?.ProfilImage ?? "https://devtest.pekova.com.tr/app/cv/img/profil.jpg")')"></div>
+
+                    <div class="flex-1">
+                        <div class="flex items-baseline gap-2">
+                            <p class="text-sm font-bold text-neutral-900 dark:text-white">
+                                @(comment.User != null ? $"{comment.User.Name} {comment.User.Surname}" : "Anonim Kullanıcı")
+                            </p>
+
+                            <p class="text-xs text-neutral-500">
+                                @comment.CreatedAt.ToShortDateString()
+                            </p>
+                        </div>
+                        <p class="mt-1 text-sm text-neutral-700 dark:text-neutral-300">
+                            @comment.Content
+                        </p>
+                    </div>
+                </div>
+            }
+        }
+        else
+        {
+            <p class="text-sm text-neutral-500 italic">Henüz yorum yapılmamış.</p>
+        }
+    </div>
+
+    <nav class="flex items-center justify-center gap-2 pt-8">
+        <a class="flex h-10 w-10 items-center justify-center rounded-full hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50" href="#">
+            <span class="material-symbols-outlined">chevron_left</span>
+        </a>
+        <a class="flex h-10 w-10 items-center justify-center rounded-full bg-primary text-sm font-bold text-white" href="#">1</a>
+        <a class="flex h-10 w-10 items-center justify-center rounded-full text-sm hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50" href="#">2</a>
+        <a class="flex h-10 w-10 items-center justify-center rounded-full text-sm hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50" href="#">3</a>
+        <span class="flex h-10 w-10 items-center justify-center rounded-full text-sm">...</span>
+        <a class="flex h-10 w-10 items-center justify-center rounded-full text-sm hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50" href="#">5</a>
+        <a class="flex h-10 w-10 items-center justify-center rounded-full hover:bg-neutral-200/50 dark:hover:bg-neutral-800/50" href="#">
+            <span class="material-symbols-outlined">chevron_right</span>
+        </a>
+    </nav>
+</div>

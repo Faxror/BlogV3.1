@@ -1,15 +1,117 @@
-﻿
-@{
-    Layout = null;
-}
+﻿@model EntityLayerr.Concrate.Category
 
 <!DOCTYPE html>
-
-<html>
+<html class="light" lang="tr">
 <head>
-    <meta name="viewport" content="width=device-width" />
-    <title>updateCategory</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Kategori Düzenle</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
+    <link href="https://fonts.googleapis.com/css2?family=Newsreader:wght@400;500;700;800&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        primary: "#1193d4",
+                        "background-light": "#f6f7f8",
+                        "background-dark": "#101c22",
+                        "foreground-light": "#111618",
+                        "foreground-dark": "#f6f7f8",
+                        "card-light": "#ffffff",
+                        "card-dark": "#182832",
+                        "border-light": "#e3e8eb",
+                        "border-dark": "#2d3f4d",
+                        "muted-foreground-light": "#617c89",
+                        "muted-foreground-dark": "#94a3b8"
+                    },
+                    fontFamily: {
+                        display: ["Newsreader"],
+                        sans: ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {
+                        DEFAULT: "0.5rem",
+                        lg: "0.75rem",
+                        xl: "1rem",
+                        full: "9999px"
+                    },
+                },
+            },
+        }
+    </script>
 </head>
-<body>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#0d171b] dark:text-slate-50">
+    <div class="relative flex min-h-screen w-full flex-row bg-slate-50 dark:bg-slate-950 overflow-x-hidden">
+        @Html.Partial("_AdminStatics")
+
+        <main class="flex-1  p-6 relative">
+            <div class="w-full max-w-3xl">
+                <form asp-action="updateCategory" asp-controller="Admin" method="post" class="space-y-6">
+                    <div class="mb-8">
+                        <h2 class="text-2xl font-bold leading-tight tracking-tight">Kategori Düzenle</h2>
+                        <p class="text-slate-500 dark:text-slate-400 mt-1">@Model.CategoryName adlı kategorinizi düzenleyin.</p>
+                    </div>
+
+                    <div class="bg-white dark:bg-slate-900 rounded-xl shadow-sm border border-slate-200 dark:border-slate-800">
+                        <div class="p-6 space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-2 items-start">
+
+                                <div class="md:col-span-1">
+                                    <label asp-for="CategoryName" class="text-sm font-medium"></label>
+                                </div>
+                                <input type="hidden" asp-for="CategoryId" />
+
+                                <div class="md:col-span-2">
+                                    <input asp-for="CategoryName"
+                                           class="form-input w-full rounded-lg text-[#0d171b] dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cfdfe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 focus:border-primary h-10 placeholder:text-[#4c809a] dark:placeholder:text-slate-500 px-4 text-sm"
+                                           placeholder="@Model.CategoryName" />
+                                    <span asp-validation-for="CategoryName" class="text-red-500 text-xs"></span>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Kategori adı en az 3, en fazla 50 karakter olmalıdır.</p>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-2 items-start">
+                                <div class="md:col-span-1">
+                                    <label asp-for="CategoryDescription" class="text-sm font-medium"></label>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <textarea asp-for="CategoryDescription"
+                                              class="form-textarea w-full rounded-lg text-[#0d171b] dark:text-slate-50 focus:outline-none focus:ring-2 focus:ring-primary/50 border border-[#cfdfe7] dark:border-slate-700 bg-slate-50 dark:bg-slate-800/60 focus:border-primary min-h-[120px] placeholder:text-[#4c809a] dark:placeholder:text-slate-500 p-3 text-sm"
+                                              placeholder="@Model.CategoryDescription"></textarea>
+                                    <span asp-validation-for="CategoryDescription" class="text-red-500 text-xs"></span>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-x-6 gap-y-2 items-start">
+                                <div class="md:col-span-1">
+                                    <label asp-for="CategoryStatus" class="text-sm font-medium"></label>
+                                </div>
+                                <div class="md:col-span-2">
+                                    <div class="flex items-center gap-2">
+                                        <input asp-for="CategoryStatus"
+                                               class="form-checkbox h-4 w-4 text-primary rounded border-slate-300 dark:border-slate-700 bg-slate-100 dark:bg-slate-800 focus:ring-primary/50" />
+                                        <label class="text-sm text-slate-700 dark:text-slate-300" for="CategoryStatus">Aktif</label>
+                                    </div>
+                                    <span asp-validation-for="CategoryStatus" class="text-red-500 text-xs"></span>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-2">Kategorinin blogda görünüp görünmeyeceğini belirler.</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="bg-slate-50 dark:bg-slate-900/50 px-6 py-4 border-t border-slate-200 dark:border-slate-800 flex justify-end gap-3 rounded-b-xl">
+                            <a href="@Url.Action("Categories", "Admin")"
+                               class="flex min-w-[84px] items-center justify-center rounded-lg h-9 px-4 bg-slate-200 dark:bg-slate-700 text-[#0d171b] dark:text-slate-50 text-sm font-bold hover:bg-slate-300 dark:hover:bg-slate-600 transition-colors">
+                                İptal
+                            </a>
+                            <button type="submit"
+                                    class="flex min-w-[84px] items-center justify-center rounded-lg h-9 px-4 bg-primary text-slate-50 text-sm font-bold hover:bg-primary/90 transition-colors">
+                                Kaydet
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
 </body>
 </html>

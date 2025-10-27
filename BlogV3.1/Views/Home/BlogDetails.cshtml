@@ -8,7 +8,7 @@
     <meta charset="utf-8" />
     <link crossorigin="" href="https://fonts.gstatic.com/" rel="preconnect" />
     <link as="style" href="https://fonts.googleapis.com/css2?display=swap&amp;family=Newsreader%3Awght%40400%3B500%3B700%3B800&amp;family=Noto+Sans%3Awght%40400%3B500%3B700%3B900" onload="this.rel='stylesheet'" rel="stylesheet" />
-    <title>Stitch Design</title>
+    <title>Blog Details</title>
     <link href="data:image/x-icon;base64," rel="icon" type="image/x-icon" />
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script>
@@ -50,7 +50,7 @@
             <div class="flex items-center gap-4">
                 <div class="relative hidden sm:block">
 
-                    <div class="h-10 w-10 shrink-0 rounded-full bg-cover bg-center" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA4oKeFUmRMXxn86zzZvjmtiWMJZDJxdTv493lTVuLjAT_fghhPJVdiIZ9NfAUGF_3_u13cQ9TFYTc5evGMQMi-gljpryMfj6JeRSrM2SP2z69F_t0hvb1cyCnWnYmAn64MOh4JwKt4aupkW4-wwt6ZkmMgwRTS8699RE_FAC56SZFp-aIxQ1KFHcI94LMDYnk3HFNH-K1RLHkZLlya-WAONge8PABUpIUMNCkqH8MR6Y7rVwUfkshAjQW55j7KGbn6M8laDZ5IEIN4");'></div>
+                    <div class="h-10 w-10 shrink-0 rounded-full bg-cover bg-center" style='background-image: url("@Model.Author.AuthorImage");'></div>
                 </div>
         </header>
         <main class="flex-1 px-4 py-8 md:px-10 lg:px-40">
@@ -75,6 +75,14 @@
                 </a>
                 </nav>
             </div>
+
+            @await Html.PartialAsync("_CommentsPartial", new CommentViewModel
+                        {
+                NewComment = new EntityLayerr.Concrate.Comment { PostId = Model.Blog.Id },
+                        Comments = Model.Comments
+                        })
+
+
     </div>
     </main>
     </div>

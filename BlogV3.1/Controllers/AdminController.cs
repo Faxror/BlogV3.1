@@ -282,7 +282,14 @@ namespace BlogV3._1.Controllers
                                                 Text = x.AuthorName,
                                                 Value = x.AuthorID.ToString()
                                             }).ToList();
+            List<SelectListItem> Kategorys = (from x in _categoryServices.GetCategories()
+                                            select new SelectListItem
+                                            {
+                                                Text = x.CategoryName,
+                                                Value = x.CategoryId.ToString()
+                                            }).ToList();
             ViewBag.v = valuess;
+            ViewBag.s = Kategorys;
             return View();
         }
 
@@ -299,7 +306,18 @@ namespace BlogV3._1.Controllers
             await Task.Run(() => blogServices.addBlog(blogs));
 
             TempData["SuccessMessage"] = "Yazı başarıyla eklendi!";
-            return RedirectToAction("AddWrite");
+            return RedirectToAction("Write");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddWriteFalse(Blogs blogs)
+        {
+            blogs.BlogTime = DateTime.Now;
+            blogs.BlogImage = "https://ornek.com/gorsel.jpg";
+            blogs.status = false;
+            await Task.Run(() => blogServices.addBlog(blogs));
+            TempData["SuccessMessage"] = "Yazı başarıyla eklendi!";
+            return RedirectToAction("Write");
         }
 
 
@@ -321,27 +339,17 @@ namespace BlogV3._1.Controllers
         {
             blogs.BlogTime = DateTime.Now;
             await Task.Run(() => blogServices.UpdateBlog(blogs));
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Write", "Admin");
         }
 
         public IActionResult DeleteBlog(int id)
         {
             blogServices.removeBlog(id);
-            return RedirectToAction("Index", "Admin");
+            return RedirectToAction("Write", "Admin");
         }
 
 
-        [HttpPost]
-        public async Task<IActionResult> AddWriteFalse(Blogs blogs)
-        {
-            blogs.BlogTime = DateTime.Now;
-            blogs.BlogImage = "https://ornek.com/gorsel.jpg";
-            blogs.status = false;
-            await Task.Run(() => blogServices.addBlog(blogs));
-            TempData["SuccessMessage"] = "Yazı başarıyla eklendi!";
-            return RedirectToAction("AddWrite");
-        }
-
+   
         [HttpGet]
         public async Task<IActionResult> statistics(DateTime? startDate, DateTime? endDate)
         {
@@ -399,5 +407,8 @@ namespace BlogV3._1.Controllers
             await Task.Run(() => _categoryServices.CategoryDelete(id));
             return RedirectToAction("Categories", "Admin");
         }
+
+        
+
     }
 }
